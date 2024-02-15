@@ -88,7 +88,7 @@ print("Model trained")
 
 print("Now getting new observations to test")
 
-focal_year = '2021'
+focal_year = '2023'
 
 response = get_taxa(q='Notophthalmus viridescens', rank=['species'])
 
@@ -98,11 +98,13 @@ response = get_observations(taxon_id=taxa[0].id, page='all', quality_grade='rese
 
 salamander_observations = Observation.from_json_list(response)
 
-pprint(salamander_observations[:20])
+#pprint(salamander_observations[:20])
 
 #print(salamander_observations[0])
 
-df = pd.DataFrame(columns = ["ID", "Latitude", "Longitude","Observed_on", "Stage", "Stage_confidence", "Photo_URL"])
+#df = pd.DataFrame(columns = ["ID", "Latitude", "Longitude","Observed_on", "Stage", "Stage_confidence", "Photo_URL"])
+df = pd.DataFrame()
+
 
 def appendDictToDF(df,dictToAppend):
   df = pd.concat([df, pd.DataFrame.from_records([dictToAppend])])
@@ -113,8 +115,7 @@ for obs in salamander_observations[:50]:
 		latitude = obs.location[0]
 		longitude = obs.location[1]
 		ID = obs.id
-		observed_on = obs.observed_on
-		photo_url = obs.photo_url
+		photo_url = obs.photos[0].url
 		print(photo_url)
 		sample_path = tf.keras.utils.get_file("photo_" + str(ID), origin=photo_url)
 		img = tf.keras.utils.load_img(sample_path, target_size=(img_height, img_width))
@@ -126,9 +127,9 @@ for obs in salamander_observations[:50]:
 		stage_confidence = 100 * np.max(score)
 		print(stage)
 		print(stage_confidence)
-		df = appendDictToDF(df,{"ID": ID, "Latitude": latitude, "Longitude": longitude, "Observed_on": observed_on, "Stage": stage, "Stage_confidence": stage_confidence, "Photo_URL": photo_url})
+		df = appendDictToDF(df,{"ID": ID, "Latitude": latitude, "Longitude": longitude, "Stage": stage, "Stage_confidence": stage_confidence, "Photo_URL": photo_url})
 	except:
 		print("Error in observation " + str(ID))
 		pass
 
-df.to_csv("salamander_observations_2021.csv")
+df.to_csv("salamander_observations_2023.csv")
