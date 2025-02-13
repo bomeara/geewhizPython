@@ -1,3 +1,5 @@
+# with homebrew, may need to use `pip3 install keras --break-system-packages` to install packages
+
 from pyinaturalist import *
 import os
 import requests # request img from web
@@ -20,7 +22,7 @@ from tensorflow.keras.models import Sequential
 
 from keras.models import Sequential
 from keras.layers import Dense, Conv2D , MaxPool2D , Flatten , Dropout 
-from keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from keras.optimizers import Adam
 
 new_dir = "salamander_images_2022"
@@ -88,7 +90,7 @@ print("Model trained")
 
 print("Now getting new observations to test")
 
-focal_year = '2023'
+focal_year = '2024'
 
 response = get_taxa(q='Notophthalmus viridescens', rank=['species'])
 
@@ -132,4 +134,4 @@ for obs in salamander_observations[:50]:
 		print("Error in observation " + str(ID))
 		pass
 
-df.to_csv("salamander_observations_2023.csv")
+df.to_csv("salamander_observations_2024.csv")
