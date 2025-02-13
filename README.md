@@ -15,7 +15,7 @@ Like many things in biology, these are not discrete categories. I have used iNat
 
 ## Install Python
 
-To use this, you will need to install Python3 and several libraries(`pip install pynaturalist`, etc.)
+To use this, you will need to install Python3 and several libraries(`pip install pyinaturalist`, etc.)
 
 * pyinaturalist
 * tensorflow
